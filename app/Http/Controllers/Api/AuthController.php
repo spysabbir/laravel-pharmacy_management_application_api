@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\API\BaseController as BaseController;
+use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +59,8 @@ class AuthController extends BaseController
     }
 
     public function logout() {
-        auth()->user()->tokens()->delete();
+        Auth::user()->tokens()->delete();
+        
         return $this->sendResponse([], 'User Logout');
     }
 }
