@@ -25,7 +25,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::resource('suppliers', SupplierController::class);
+    Route::resource('supplier', SupplierController::class);
     Route::resource('customer', CustomerController::class);
     Route::resource('type', TypeController::class);
     Route::resource('power', PowerController::class);
