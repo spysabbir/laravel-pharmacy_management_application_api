@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -60,7 +61,13 @@ class CustomerController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $customer->update($request->all());
+        $customer->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'address' => $request->address,
+            'updated_at' => Carbon::now()
+        ]);
 
         return $this->sendResponse(new CustomerResource($customer), 'Customer update successfully.');
     }

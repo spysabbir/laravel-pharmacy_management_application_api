@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Http\Resources\TypeResource;
 use App\Models\Type;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -54,7 +55,10 @@ class TypeController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $type->update($request->all());
+        $type->update([
+            'name' => $request->name,
+            'updated_at' => Carbon::now()
+        ]);
 
         return $this->sendResponse(new TypeResource($type), 'Type update successfully.');
     }

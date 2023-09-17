@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Http\Resources\UnitResource;
 use App\Models\Unit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -54,7 +55,10 @@ class UnitController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $unit->update($request->all());
+        $unit->update([
+            'name' => $request->name,
+            'updated_at' => Carbon::now()
+        ]);
 
         return $this->sendResponse(new UnitResource($unit), 'Unit update successfully.');
     }

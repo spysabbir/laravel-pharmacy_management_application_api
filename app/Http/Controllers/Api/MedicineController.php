@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Http\Resources\MedicineResource;
 use App\Models\Medicine;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,7 +63,14 @@ class MedicineController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $medicine->update($request->all());
+        $medicine->update([
+            'supplier_id' => $request->supplier_id,
+            'name' => $request->name,
+            'power_id' => $request->power_id,
+            'type_id' => $request->type_id,
+            'unit_id' => $request->unit_id,
+            'updated_at' => Carbon::now()
+        ]);
 
         return $this->sendResponse(new MedicineResource($medicine), 'Medicine update successfully.');
     }
