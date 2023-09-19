@@ -22,10 +22,9 @@ class MedicineController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'supplier_id' => 'required',
+            'type_id' => 'required',
             'name' => 'required|string|max:255',
             'power_id' => 'required',
-            'type_id' => 'required',
-            'unit_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -53,10 +52,9 @@ class MedicineController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'supplier_id' => 'required',
+            'type_id' => 'required',
             'name' => 'required|string|max:255',
             'power_id' => 'required',
-            'type_id' => 'required',
-            'unit_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -65,10 +63,9 @@ class MedicineController extends BaseController
 
         $medicine->update([
             'supplier_id' => $request->supplier_id,
+            'type_id' => $request->type_id,
             'name' => $request->name,
             'power_id' => $request->power_id,
-            'type_id' => $request->type_id,
-            'unit_id' => $request->unit_id,
             'updated_at' => Carbon::now()
         ]);
 
