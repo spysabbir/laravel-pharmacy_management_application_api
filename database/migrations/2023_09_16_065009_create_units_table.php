@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('unit_name');
+            $table->integer('piece_in_unit');
             $table->timestamps();
         });
     }

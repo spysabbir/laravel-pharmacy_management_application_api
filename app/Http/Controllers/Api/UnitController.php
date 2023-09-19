@@ -21,7 +21,8 @@ class UnitController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'unit_name' => 'required|string|max:255',
+            'piece_in_unit' => 'required',
         ]);
 
         if($validator->fails()){
@@ -48,7 +49,8 @@ class UnitController extends BaseController
     public function update(Request $request, Unit $unit)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'unit_name' => 'required|string|max:255',
+            'piece_in_unit' => 'required',
         ]);
 
         if($validator->fails()){
@@ -56,7 +58,8 @@ class UnitController extends BaseController
         }
 
         $unit->update([
-            'name' => $request->name,
+            'unit_name' => $request->unit_name,
+            'piece_in_unit' => $request->piece_in_unit,
             'updated_at' => Carbon::now()
         ]);
 

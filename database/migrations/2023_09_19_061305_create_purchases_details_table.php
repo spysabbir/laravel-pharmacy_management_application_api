@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('purchases_details', function (Blueprint $table) {
             $table->id();
-            $table->float('purchases_price')->default(0);
+            $table->string('purchases_invoice_no');
+            $table->integer('medicine_id');
             $table->integer('purchases_quantity')->default(0);
+            $table->float('purchases_price')->default(0);
             $table->timestamps();
         });
     }

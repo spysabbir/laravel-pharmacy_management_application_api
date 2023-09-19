@@ -16,7 +16,8 @@ class UnitResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'unit_name' => $this->unit_name,
+            'piece_in_unit' => $this->piece_in_unit,
             'created_at' => $this->created_at->format('d/m/Y'),
             'updated_at' => $this->updated_at->format('d/m/Y'),
         ];

@@ -55,6 +55,8 @@ class MedicineController extends BaseController
             'type_id' => 'required',
             'name' => 'required|string|max:255',
             'power_id' => 'required',
+            'purchases_price' => 'required',
+            'sales_price' => 'required',
         ]);
 
         if($validator->fails()){
@@ -66,6 +68,8 @@ class MedicineController extends BaseController
             'type_id' => $request->type_id,
             'name' => $request->name,
             'power_id' => $request->power_id,
+            'purchases_price' => $request->purchases_price,
+            'sales_price' => $request->sales_price,
             'updated_at' => Carbon::now()
         ]);
 

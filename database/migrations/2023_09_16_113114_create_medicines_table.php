@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('type_id');
             $table->string('name');
             $table->integer('power_id');
+            $table->float('purchases_price')->default(0);
+            $table->float('sales_price')->default(0);
             $table->timestamps();
         });
     }

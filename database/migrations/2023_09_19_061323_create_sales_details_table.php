@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('sales_details', function (Blueprint $table) {
             $table->id();
+            $table->string('sales_invoice_no');
+            $table->integer('medicine_id');
+            $table->integer('sales_quantity')->default(0);
+            $table->float('sales_price')->default(0);
             $table->timestamps();
         });
     }

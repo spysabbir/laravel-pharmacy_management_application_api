@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('purchases_summeries', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_no');
-            $table->date('date');
+            $table->string('purchases_invoice_no');
             $table->integer('supplier_id');
-            $table->float('total_price');
+            $table->float('sub_total');
+            $table->float('discount')->nullable();
+            $table->float('grand_total');
+            $table->string('payment_status');
+            $table->float('payment_amount');
             $table->timestamps();
         });
     }
