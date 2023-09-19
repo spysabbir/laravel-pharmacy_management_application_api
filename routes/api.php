@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\MedicineController;
 use App\Http\Controllers\Api\PowerController;
+use App\Http\Controllers\Api\PurchasesController;
+use App\Http\Controllers\Api\SalesController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\UnitController;
@@ -31,6 +33,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('power', PowerController::class);
     Route::resource('unit', UnitController::class);
     Route::resource('medicine', MedicineController::class);
+
+    Route::resource('purchases', PurchasesController::class);
+    Route::resource('sales', SalesController::class);
 
     Route::get('logout', [AuthController::class, 'logout']);
 });
