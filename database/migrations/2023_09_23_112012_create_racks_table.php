@@ -11,16 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medicines', function (Blueprint $table) {
+        Schema::create('racks', function (Blueprint $table) {
             $table->id();
-            $table->integer('supplier_id');
-            $table->integer('type_id');
             $table->string('name');
-            $table->integer('power_id');
-            $table->integer('unit_id');
-            $table->integer('rack_id');
-            $table->float('purchases_price')->default(0);
-            $table->float('sales_price')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medicines');
+        Schema::dropIfExists('racks');
     }
 };

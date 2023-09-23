@@ -65,6 +65,7 @@ class UnitController extends BaseController
 
         return $this->sendResponse(new UnitResource($unit), 'Unit update successfully.');
     }
+    
     public function destroy(Unit $unit)
     {
         $unit->delete();

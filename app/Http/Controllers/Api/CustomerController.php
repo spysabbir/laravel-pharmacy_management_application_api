@@ -71,6 +71,7 @@ class CustomerController extends BaseController
 
         return $this->sendResponse(new CustomerResource($customer), 'Customer update successfully.');
     }
+    
     public function destroy(Customer $customer)
     {
         $customer->delete();

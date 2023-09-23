@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\BaseController as BaseController;
-use App\Http\Resources\TypeResource;
-use App\Models\Type;
+use App\Http\Resources\RackResource;
+use App\Models\Rack;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class TypeController extends BaseController
+class RackController extends BaseController
 {
     public function index()
     {
-        $types = Type::all();
+        $racks = Rack::all();
 
-        return $this->sendResponse(TypeResource::collection($types), 'Type retrieved successfully.');
+        return $this->sendResponse(RackResource::collection($racks), 'Rack retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -28,24 +28,24 @@ class TypeController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $type = Type::create($request->all());
+        $rack = Rack::create($request->all());
 
-        return $this->sendResponse(new TypeResource($type), 'Type create successfully.');
+        return $this->sendResponse(new RackResource($rack), 'Rack create successfully.');
     }
 
     public function show($id)
     {
-        $type = Type::find($id);
+        $rack = Rack::find($id);
 
-        if(is_null($type))
+        if(is_null($rack))
         {
-            return $this->sendError('Type not found.');
+            return $this->sendError('Rack not found.');
         }
 
-        return $this->sendResponse(new TypeResource($type), 'Type retrieved.');
+        return $this->sendResponse(new RackResource($rack), 'Rack retrieved.');
     }
 
-    public function update(Request $request, Type $type)
+    public function update(Request $request, Rack $rack)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -55,18 +55,18 @@ class TypeController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $type->update([
+        $rack->update([
             'name' => $request->name,
             'updated_at' => Carbon::now()
         ]);
 
-        return $this->sendResponse(new TypeResource($type), 'Type update successfully.');
+        return $this->sendResponse(new RackResource($rack), 'Rack update successfully.');
     }
-    
-    public function destroy(Type $type)
-    {
-        $type->delete();
 
-        return $this->sendResponse(new TypeResource($type), 'Type delete.');
+    public function destroy(Rack $rack)
+    {
+        $rack->delete();
+
+        return $this->sendResponse(new RackResource($rack), 'Rack delete.');
     }
 }

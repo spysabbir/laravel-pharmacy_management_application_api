@@ -62,6 +62,7 @@ class PowerController extends BaseController
 
         return $this->sendResponse(new PowerResource($power), 'Power update successfully.');
     }
+    
     public function destroy(Power $power)
     {
         $power->delete();

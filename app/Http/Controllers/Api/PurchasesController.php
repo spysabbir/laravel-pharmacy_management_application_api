@@ -83,6 +83,7 @@ class PurchasesController extends BaseController
 
         return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases Summery update successfully.');
     }
+    
     public function destroy(PurchasesSummery $purchasesSummery)
     {
         $purchasesSummery->delete();

@@ -71,6 +71,7 @@ class SupplierController extends BaseController
 
         return $this->sendResponse(new SupplierResource($supplier), 'Supplier update successfully.');
     }
+    
     public function destroy(Supplier $supplier)
     {
         $supplier->delete();

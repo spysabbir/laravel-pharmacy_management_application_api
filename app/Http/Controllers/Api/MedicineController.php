@@ -26,6 +26,7 @@ class MedicineController extends BaseController
             'name' => 'required|string|max:255',
             'power_id' => 'required',
             'unit_id' => 'required',
+            'rack_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -57,6 +58,7 @@ class MedicineController extends BaseController
             'name' => 'required|string|max:255',
             'power_id' => 'required',
             'unit_id' => 'required',
+            'rack_id' => 'required',
             'purchases_price' => 'required',
             'sales_price' => 'required',
         ]);
@@ -71,6 +73,7 @@ class MedicineController extends BaseController
             'name' => $request->name,
             'power_id' => $request->power_id,
             'unit_id' => $request->unit_id,
+            'rack_id' => $request->rack_id,
             'purchases_price' => $request->purchases_price,
             'sales_price' => $request->sales_price,
             'updated_at' => Carbon::now()
@@ -78,6 +81,7 @@ class MedicineController extends BaseController
 
         return $this->sendResponse(new MedicineResource($medicine), 'Medicine update successfully.');
     }
+
     public function destroy(Medicine $medicine)
     {
         $medicine->delete();
