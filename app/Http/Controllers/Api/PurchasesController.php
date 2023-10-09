@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Http\Resources\PurchasesSummeryResource;
+use App\Models\PurchasesDetails;
 use App\Models\PurchasesSummery;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,8 +23,10 @@ class PurchasesController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'supplier_id' => 'required',
-            'payment_status' => 'required',
-            'payment_amount' => 'required',
+            // 'payment_status' => 'required',
+            // 'payment_amount' => 'required',
+            // 'purchaseCartData' => 'required|array',
+            // 'purchaseCartData.*.medicine_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -38,10 +41,24 @@ class PurchasesController extends BaseController
             'sub_total' => $request->sub_total,
             'discount' => $request->discount,
             'grand_total' => $request->grand_total,
-            'payment_status' => $request->payment_status,
-            'payment_amount' => $request->payment_amount,
+            'payment_status' => 'Paid',
+            'payment_amount' => $request->grand_total,
             'created_at' => Carbon::now()
         ]);
+
+        $cartItems = [];
+
+        foreach ($request->purchaseCartData as $item) {
+            $cartItems[] = PurchasesDetails::create([
+                'purchases_invoice_no' => $purchases_invoice_no,
+                'medicine_id' => $item->medicine_id,
+                'purchases_quantity' => $item->purchases_quantity,
+                'purchases_price' => $item->purchases_price,
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+
 
         return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases Summery create successfully.');
     }
@@ -83,7 +100,7 @@ class PurchasesController extends BaseController
 
         return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases Summery update successfully.');
     }
-    
+
     public function destroy(PurchasesSummery $purchasesSummery)
     {
         $purchasesSummery->delete();
