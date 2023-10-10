@@ -16,7 +16,7 @@ class PurchasesController extends BaseController
     {
         $purchasesSummery = PurchasesSummery::all();
 
-        return $this->sendResponse(PurchasesSummeryResource::collection($purchasesSummery), 'Purchases Summery retrieved successfully.');
+        return $this->sendResponse($purchasesSummery, 'Purchases Summery retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -46,21 +46,17 @@ class PurchasesController extends BaseController
             'created_at' => Carbon::now()
         ]);
 
-        $cartItems = [];
-
         foreach ($request->purchaseCartData as $item) {
-            $cartItems[] = PurchasesDetails::create([
+            PurchasesDetails::create([
                 'purchases_invoice_no' => $purchases_invoice_no,
-                'medicine_id' => $item->medicine_id,
-                'purchases_quantity' => $item->purchases_quantity,
-                'purchases_price' => $item->purchases_price,
+                'medicine_id' => 1,
+                'purchases_quantity' => 1,
+                'purchases_price' => 100,
                 'created_at' => Carbon::now()
             ]);
         }
 
-
-
-        return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases Summery create successfully.');
+        return $this->sendResponse($purchasesSummery, 'Purchases Summery create successfully.');
     }
 
     public function show($id)
@@ -86,7 +82,6 @@ class PurchasesController extends BaseController
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());
         }
-
 
         $purchasesSummery->update([
             'supplier_id' => $request->supplier_id,
