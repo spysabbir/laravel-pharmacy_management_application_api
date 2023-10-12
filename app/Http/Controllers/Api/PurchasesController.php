@@ -23,10 +23,10 @@ class PurchasesController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'supplier_id' => 'required',
-            // 'payment_status' => 'required',
-            // 'payment_amount' => 'required',
-            // 'purchaseCartData' => 'required|array',
-            // 'purchaseCartData.*.medicine_id' => 'required',
+            'sub_total' => 'required',
+            'grand_total' => 'required',
+            'payment_status' => 'required',
+            'payment_amount' => 'required',
         ]);
 
         if($validator->fails()){
@@ -41,8 +41,8 @@ class PurchasesController extends BaseController
             'sub_total' => $request->sub_total,
             'discount' => $request->discount,
             'grand_total' => $request->grand_total,
-            'payment_status' => 'Paid',
-            'payment_amount' => $request->grand_total,
+            'payment_status' => $request->payment_status,
+            'payment_amount' => $request->payment_amount,
             'created_at' => Carbon::now()
         ]);
 
@@ -68,38 +68,18 @@ class PurchasesController extends BaseController
             return $this->sendError('Purchases Summery not found.');
         }
 
-        return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases Summery retrieved.');
+        return $this->sendResponse($purchasesSummery, 'Purchases Summery retrieved.');
     }
 
     public function update(Request $request, PurchasesSummery $purchasesSummery)
     {
-        $validator = Validator::make($request->all(), [
-            'supplier_id' => 'required',
-            'payment_status' => 'required',
-            'payment_amount' => 'required',
-        ]);
-
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $purchasesSummery->update([
-            'supplier_id' => $request->supplier_id,
-            'sub_total' => $request->sub_total,
-            'discount' => $request->discount,
-            'grand_total' => $request->grand_total,
-            'payment_status' => $request->payment_status,
-            'payment_amount' => $request->payment_amount,
-            'updated_at' => Carbon::now()
-        ]);
-
-        return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases Summery update successfully.');
+        
     }
 
     public function destroy(PurchasesSummery $purchasesSummery)
     {
         $purchasesSummery->delete();
 
-        return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases Summery delete.');
+        return $this->sendResponse($purchasesSummery, 'Purchases Summery delete.');
     }
 }
