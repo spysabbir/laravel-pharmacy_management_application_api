@@ -16,7 +16,7 @@ class PurchasesController extends BaseController
     {
         $purchasesSummery = PurchasesSummery::all();
 
-        return $this->sendResponse($purchasesSummery, 'Purchases Summery retrieved successfully.');
+        return $this->sendResponse($purchasesSummery, 'Purchases summery retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -49,14 +49,14 @@ class PurchasesController extends BaseController
         foreach ($request->purchaseCartData as $item) {
             PurchasesDetails::create([
                 'purchases_invoice_no' => $purchases_invoice_no,
-                'medicine_id' => 1,
-                'purchases_quantity' => 1,
-                'purchases_price' => 100,
+                'medicine_id' => $item['id'],
+                'purchases_quantity' => $item['purchases_quantity'],
+                'purchases_price' => $item['purchases_price'],
                 'created_at' => Carbon::now()
             ]);
         }
 
-        return $this->sendResponse($purchasesSummery, 'Purchases Summery create successfully.');
+        return $this->sendResponse($purchasesSummery, 'Purchases successfully.');
     }
 
     public function show($id)
@@ -65,21 +65,21 @@ class PurchasesController extends BaseController
 
         if(is_null($purchasesSummery))
         {
-            return $this->sendError('Purchases Summery not found.');
+            return $this->sendError('Purchases summery not found.');
         }
 
-        return $this->sendResponse($purchasesSummery, 'Purchases Summery retrieved.');
+        return $this->sendResponse($purchasesSummery, 'Purchases summery retrieved.');
     }
 
     public function update(Request $request, PurchasesSummery $purchasesSummery)
     {
-        
+
     }
 
     public function destroy(PurchasesSummery $purchasesSummery)
     {
         $purchasesSummery->delete();
 
-        return $this->sendResponse($purchasesSummery, 'Purchases Summery delete.');
+        return $this->sendResponse($purchasesSummery, 'Purchases summery delete.');
     }
 }
