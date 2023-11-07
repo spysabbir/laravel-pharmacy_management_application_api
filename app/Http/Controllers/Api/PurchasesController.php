@@ -56,7 +56,7 @@ class PurchasesController extends BaseController
             ]);
         }
 
-        return $this->sendResponse($purchasesSummery, 'Purchases successfully.');
+        return $this->sendResponse($purchasesSummery, 'Purchasing successfully.');
     }
 
     public function show($id)
@@ -78,6 +78,7 @@ class PurchasesController extends BaseController
 
     public function destroy(PurchasesSummery $purchasesSummery)
     {
+
         $purchasesSummery->delete();
 
         return $this->sendResponse($purchasesSummery, 'Purchases summery delete.');
