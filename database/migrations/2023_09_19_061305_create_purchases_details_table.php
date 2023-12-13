@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('purchases_details', function (Blueprint $table) {
             $table->id();
-            $table->string('purchases_invoice_no');
+            $table->unsignedBigInteger('purchases_summery_id');
             $table->integer('medicine_id');
             $table->integer('purchases_quantity')->default(0);
             $table->float('purchases_price')->default(0);
             $table->timestamps();
+
+            $table->foreign('purchases_summery_id')->references('id')->on('purchases_summeries')->onDelete('cascade');
         });
     }
 

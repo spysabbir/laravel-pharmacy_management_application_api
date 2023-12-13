@@ -16,7 +16,7 @@ class PurchasesController extends BaseController
     {
         $purchasesSummery = PurchasesSummery::all();
 
-        return $this->sendResponse($purchasesSummery, 'Purchases summery retrieved successfully.');
+        return $this->sendResponse(PurchasesSummeryResource::collection($purchasesSummery), 'Purchases summery retrieved successfully.');
     }
 
     public function store(Request $request)
@@ -48,7 +48,7 @@ class PurchasesController extends BaseController
 
         foreach ($request->purchaseCartData as $item) {
             PurchasesDetails::create([
-                'purchases_invoice_no' => $purchases_invoice_no,
+                'purchases_summery_id' => $purchasesSummery->id,
                 'medicine_id' => $item['id'],
                 'purchases_quantity' => $item['purchases_quantity'],
                 'purchases_price' => $item['purchases_price'],
@@ -56,7 +56,7 @@ class PurchasesController extends BaseController
             ]);
         }
 
-        return $this->sendResponse($purchasesSummery, 'Purchasing successfully.');
+        return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchasing successfully.');
     }
 
     public function show($id)
@@ -68,19 +68,50 @@ class PurchasesController extends BaseController
             return $this->sendError('Purchases summery not found.');
         }
 
-        return $this->sendResponse($purchasesSummery, 'Purchases summery retrieved.');
+        return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases summery retrieved.');
     }
 
-    public function update(Request $request, PurchasesSummery $purchasesSummery)
-    {
+    // public function update(Request $request, PurchasesSummery $purchasesSummery)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'supplier_id' => 'required',
+    //         'sub_total' => 'required',
+    //         'grand_total' => 'required',
+    //         'payment_status' => 'required',
+    //         'payment_amount' => 'required',
+    //     ]);
 
-    }
+    //     if($validator->fails()){
+    //         return $this->sendError('Validation Error.', $validator->errors());
+    //     }
+
+    //     $purchasesSummery->update([
+    //         'supplier_id' => $request->supplier_id,
+    //         'sub_total' => $request->sub_total,
+    //         'discount' => $request->discount,
+    //         'grand_total' => $request->grand_total,
+    //         'payment_status' => $request->payment_status,
+    //         'payment_amount' => $request->payment_amount,
+    //         'updated_at' => Carbon::now()
+    //     ]);
+
+    //     foreach ($request->purchaseCartData as $item) {
+    //         PurchasesDetails::create([
+    //             'purchases_summery_id' => $purchasesSummery->id,
+    //             'medicine_id' => $item['id'],
+    //             'purchases_quantity' => $item['purchases_quantity'],
+    //             'purchases_price' => $item['purchases_price'],
+    //             'created_at' => Carbon::now()
+    //         ]);
+    //     }
+
+    //     return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases summery update successfully.');
+    // }
 
     public function destroy(PurchasesSummery $purchasesSummery)
     {
-
         $purchasesSummery->delete();
 
-        return $this->sendResponse($purchasesSummery, 'Purchases summery delete.');
+        return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases summery delete.');
     }
 }

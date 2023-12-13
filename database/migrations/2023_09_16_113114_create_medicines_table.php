@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('power_id');
             $table->integer('unit_id');
             $table->integer('rack_id');
+            $table->float('purchases_quantity')->default(0);
+            $table->float('sales_quantity')->default(0);
             $table->float('purchases_price')->default(0);
             $table->float('sales_price')->default(0);
             $table->timestamps();
