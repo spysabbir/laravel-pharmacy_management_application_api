@@ -61,7 +61,7 @@ class PurchasesController extends BaseController
 
     public function show($id)
     {
-        $purchasesSummery = PurchasesSummery::find($id);
+        $purchasesSummery = PurchasesSummery::with('purchasesDetails')->find($id);
 
         if(is_null($purchasesSummery))
         {
@@ -108,8 +108,9 @@ class PurchasesController extends BaseController
     //     return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases summery update successfully.');
     // }
 
-    public function destroy(PurchasesSummery $purchasesSummery)
+    public function destroy($id)
     {
+        $purchasesSummery = PurchasesSummery::find($id);
         $purchasesSummery->delete();
 
         return $this->sendResponse(new PurchasesSummeryResource($purchasesSummery), 'Purchases summery delete.');
