@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2023 at 01:35 PM
+-- Generation Time: Jan 18, 2024 at 07:07 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -67,11 +67,22 @@ CREATE TABLE `medicines` (
   `power_id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
   `rack_id` int(11) NOT NULL,
+  `purchases_quantity` double(8,2) NOT NULL DEFAULT 0.00,
+  `sales_quantity` double(8,2) NOT NULL DEFAULT 0.00,
   `purchases_price` double(8,2) NOT NULL DEFAULT 0.00,
   `sales_price` double(8,2) NOT NULL DEFAULT 0.00,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `medicines`
+--
+
+INSERT INTO `medicines` (`id`, `supplier_id`, `type_id`, `name`, `power_id`, `unit_id`, `rack_id`, `purchases_quantity`, `sales_quantity`, `purchases_price`, `sales_price`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Clopid', 5, 1, 1, 0.00, 0.00, 110.00, 110.00, '2024-01-18 05:57:19', '2024-01-22 18:00:00'),
+(2, 2, 1, 'Sergel', 6, 1, 1, 0.00, 0.00, 110.00, 110.00, '2024-01-18 05:57:19', '2024-01-22 18:00:00'),
+(3, 3, 1, 'Pantonix', 6, 1, 1, 0.00, 0.00, 110.00, 110.00, '2024-01-18 05:57:19', '2024-01-22 18:00:00');
 
 -- --------------------------------------------------------
 
@@ -98,13 +109,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2023_09_16_064932_create_powers_table', 1),
 (7, '2023_09_16_064939_create_types_table', 1),
 (8, '2023_09_16_065009_create_units_table', 1),
-(9, '2023_09_16_113114_create_medicines_table', 1),
-(10, '2023_09_16_113348_create_customers_table', 1),
-(11, '2023_09_19_061239_create_purchases_summeries_table', 1),
-(12, '2023_09_19_061305_create_purchases_details_table', 1),
-(13, '2023_09_19_061323_create_sales_details_table', 1),
-(14, '2023_09_19_061335_create_sales_summeries_table', 1),
-(15, '2023_09_23_112012_create_racks_table', 1);
+(9, '2023_09_16_112012_create_racks_table', 1),
+(10, '2023_09_16_113114_create_medicines_table', 1),
+(11, '2023_09_16_113348_create_customers_table', 1),
+(12, '2023_09_19_061239_create_purchases_summeries_table', 1),
+(13, '2023_09_19_061305_create_purchases_details_table', 1),
+(14, '2023_09_19_061315_create_sales_summeries_table', 1),
+(15, '2023_09_19_061323_create_sales_details_table', 1);
 
 -- --------------------------------------------------------
 
@@ -150,6 +161,18 @@ CREATE TABLE `powers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `powers`
+--
+
+INSERT INTO `powers` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, '100mg', '2024-01-18 05:59:27', NULL),
+(2, '500mg', '2024-01-17 18:00:00', NULL),
+(3, '250mg', '2024-01-17 18:00:00', NULL),
+(4, '1000mg', '2024-01-17 18:00:00', NULL),
+(5, '75mg', '2024-01-17 18:00:00', NULL),
+(6, '20mg', '2024-01-17 18:00:00', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -158,7 +181,7 @@ CREATE TABLE `powers` (
 
 CREATE TABLE `purchases_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `purchases_invoice_no` varchar(255) NOT NULL,
+  `purchases_summery_id` bigint(20) UNSIGNED NOT NULL,
   `medicine_id` int(11) NOT NULL,
   `purchases_quantity` int(11) NOT NULL DEFAULT 0,
   `purchases_price` double(8,2) NOT NULL DEFAULT 0.00,
@@ -198,6 +221,15 @@ CREATE TABLE `racks` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `racks`
+--
+
+INSERT INTO `racks` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Rack-01', '2024-01-18 06:04:34', NULL),
+(2, 'Rack-02', '2024-01-17 18:00:00', NULL),
+(3, 'Rack-03', '2024-01-18 06:04:34', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -206,7 +238,7 @@ CREATE TABLE `racks` (
 
 CREATE TABLE `sales_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `sales_invoice_no` varchar(255) NOT NULL,
+  `sales_summery_id` bigint(20) UNSIGNED NOT NULL,
   `medicine_id` int(11) NOT NULL,
   `sales_quantity` int(11) NOT NULL DEFAULT 0,
   `sales_price` double(8,2) NOT NULL DEFAULT 0.00,
@@ -249,6 +281,15 @@ CREATE TABLE `suppliers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `name`, `email`, `phone_number`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'Drug International Limited', 'drug@email.com', '0123456789', 'Dhaka, BD', '2024-01-18 06:04:34', NULL),
+(2, 'Incepta Pharmaceuticals Ltd', 'incepta@email.com', '0123456789', 'Dhaka, BD', '2024-01-18 06:04:34', NULL),
+(3, 'Healthcare Pharmaceuticals Limited', 'healthcare@email.com', '0123456789', 'Dhaka, BD', '2024-01-18 06:04:34', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -261,6 +302,18 @@ CREATE TABLE `types` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `types`
+--
+
+INSERT INTO `types` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Tablet', '2024-01-18 06:04:34', NULL),
+(2, 'Drops', '2024-01-18 06:04:34', NULL),
+(3, 'Injections', '2024-01-18 06:04:34', NULL),
+(4, 'Suppositories', '2024-01-18 06:04:34', NULL),
+(5, 'Capsules', '2024-01-18 06:04:34', NULL),
+(6, 'Liquid', '2024-01-18 06:04:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -275,6 +328,15 @@ CREATE TABLE `units` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `unit_name`, `piece_in_unit`, `created_at`, `updated_at`) VALUES
+(1, '1 Strip - 10 Pcs', 10, '2024-01-18 06:03:20', NULL),
+(2, '1 Strip - 6 Pcs', 6, '2024-01-18 06:03:39', NULL),
+(3, '1 Strip - 2 Pcs', 2, '2024-01-18 06:03:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -292,6 +354,13 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@email.com', NULL, '$2y$10$74zqERH0M4kOsF2p2LPV0eR2FeWJwT5.vsXKlzg.P0gToGb7Z91MK', NULL, '2024-01-17 23:51:03', '2024-01-17 23:51:03');
 
 --
 -- Indexes for dumped tables
@@ -346,7 +415,8 @@ ALTER TABLE `powers`
 -- Indexes for table `purchases_details`
 --
 ALTER TABLE `purchases_details`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `purchases_details_purchases_summery_id_foreign` (`purchases_summery_id`);
 
 --
 -- Indexes for table `purchases_summeries`
@@ -364,7 +434,8 @@ ALTER TABLE `racks`
 -- Indexes for table `sales_details`
 --
 ALTER TABLE `sales_details`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sales_details_sales_summery_id_foreign` (`sales_summery_id`);
 
 --
 -- Indexes for table `sales_summeries`
@@ -417,7 +488,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `medicines`
 --
 ALTER TABLE `medicines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -435,7 +506,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `powers`
 --
 ALTER TABLE `powers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `purchases_details`
@@ -453,7 +524,7 @@ ALTER TABLE `purchases_summeries`
 -- AUTO_INCREMENT for table `racks`
 --
 ALTER TABLE `racks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sales_details`
@@ -471,25 +542,41 @@ ALTER TABLE `sales_summeries`
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `purchases_details`
+--
+ALTER TABLE `purchases_details`
+  ADD CONSTRAINT `purchases_details_purchases_summery_id_foreign` FOREIGN KEY (`purchases_summery_id`) REFERENCES `purchases_summeries` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `sales_details`
+--
+ALTER TABLE `sales_details`
+  ADD CONSTRAINT `sales_details_sales_summery_id_foreign` FOREIGN KEY (`sales_summery_id`) REFERENCES `sales_summeries` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

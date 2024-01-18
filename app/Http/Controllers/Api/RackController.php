@@ -33,18 +33,6 @@ class RackController extends BaseController
         return $this->sendResponse(new RackResource($rack), 'Rack create successfully.');
     }
 
-    public function show($id)
-    {
-        $rack = Rack::find($id);
-
-        if(is_null($rack))
-        {
-            return $this->sendError('Rack not found.');
-        }
-
-        return $this->sendResponse(new RackResource($rack), 'Rack retrieved.');
-    }
-
     public function update(Request $request, Rack $rack)
     {
         $validator = Validator::make($request->all(), [

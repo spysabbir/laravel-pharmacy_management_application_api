@@ -33,18 +33,6 @@ class TypeController extends BaseController
         return $this->sendResponse(new TypeResource($type), 'Type create successfully.');
     }
 
-    public function show($id)
-    {
-        $type = Type::find($id);
-
-        if(is_null($type))
-        {
-            return $this->sendError('Type not found.');
-        }
-
-        return $this->sendResponse(new TypeResource($type), 'Type retrieved.');
-    }
-
     public function update(Request $request, Type $type)
     {
         $validator = Validator::make($request->all(), [
@@ -62,7 +50,7 @@ class TypeController extends BaseController
 
         return $this->sendResponse(new TypeResource($type), 'Type update successfully.');
     }
-    
+
     public function destroy(Type $type)
     {
         $type->delete();

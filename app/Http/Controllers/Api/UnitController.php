@@ -34,18 +34,6 @@ class UnitController extends BaseController
         return $this->sendResponse(new UnitResource($unit), 'Unit create successfully.');
     }
 
-    public function show($id)
-    {
-        $unit = Unit::find($id);
-
-        if(is_null($unit))
-        {
-            return $this->sendError('Unit not found.');
-        }
-
-        return $this->sendResponse(new UnitResource($unit), 'Unit retrieved.');
-    }
-
     public function update(Request $request, Unit $unit)
     {
         $validator = Validator::make($request->all(), [
@@ -65,7 +53,7 @@ class UnitController extends BaseController
 
         return $this->sendResponse(new UnitResource($unit), 'Unit update successfully.');
     }
-    
+
     public function destroy(Unit $unit)
     {
         $unit->delete();

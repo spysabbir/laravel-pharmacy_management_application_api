@@ -38,18 +38,6 @@ class MedicineController extends BaseController
         return $this->sendResponse(new MedicineResource($medicine), 'Medicine create successfully.');
     }
 
-    public function show($id)
-    {
-        $medicine = Medicine::find($id);
-
-        if(is_null($medicine))
-        {
-            return $this->sendError('Medicine not found.');
-        }
-
-        return $this->sendResponse(new MedicineResource($medicine), 'Medicine retrieved.');
-    }
-
     public function update(Request $request, Medicine $medicine)
     {
         $validator = Validator::make($request->all(), [

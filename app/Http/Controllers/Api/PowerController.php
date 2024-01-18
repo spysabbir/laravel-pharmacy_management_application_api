@@ -33,18 +33,6 @@ class PowerController extends BaseController
         return $this->sendResponse(new PowerResource($power), 'Power create successfully.');
     }
 
-    public function show($id)
-    {
-        $power = Power::find($id);
-
-        if(is_null($power))
-        {
-            return $this->sendError('Power not found.');
-        }
-
-        return $this->sendResponse(new PowerResource($power), 'Power retrieved.');
-    }
-
     public function update(Request $request, Power $power)
     {
         $validator = Validator::make($request->all(), [
@@ -62,7 +50,7 @@ class PowerController extends BaseController
 
         return $this->sendResponse(new PowerResource($power), 'Power update successfully.');
     }
-    
+
     public function destroy(Power $power)
     {
         $power->delete();
