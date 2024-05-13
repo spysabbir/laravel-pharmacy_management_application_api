@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Http\Resources\SalesSummeryResource;
+use App\Models\Medicine;
 use App\Models\SalesDetails;
 use App\Models\SalesSummery;
 use Carbon\Carbon;
@@ -54,6 +55,7 @@ class SalesController extends BaseController
                 'sales_price' => $item['sales_price'],
                 'created_at' => Carbon::now()
             ]);
+            Medicine::where('id', $item['id'])->increment('sales_quantity', $item['sales_quantity']);
         }
 
         return $this->sendResponse(new SalesSummeryResource($salesSummery), 'Selling successfully.');

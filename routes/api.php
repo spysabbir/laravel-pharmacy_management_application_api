@@ -44,6 +44,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('overview', [AuthController::class, 'overview']);
 
     Route::get('profile', [AuthController::class, 'profile']);
-    Route::patch('profile/update', [AuthController::class, 'profileUpdate']);
+    Route::put('profile/update', [AuthController::class, 'profileUpdate']);
     Route::put('password/update', [AuthController::class, 'passwordUpdate']);
 });
