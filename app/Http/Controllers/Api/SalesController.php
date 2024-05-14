@@ -50,12 +50,12 @@ class SalesController extends BaseController
         foreach ($request->saleCartData as $item) {
             SalesDetails::create([
                 'sales_summery_id' => $salesSummery->id,
-                'medicine_id' => $item['id'],
+                'medicine_id' => $item['medicine_id'],
                 'sales_quantity' => $item['sales_quantity'],
                 'sales_price' => $item['sales_price'],
                 'created_at' => Carbon::now()
             ]);
-            Medicine::where('id', $item['id'])->increment('sales_quantity', $item['sales_quantity']);
+            Medicine::where('id', $item['medicine_id'])->increment('sales_quantity', $item['sales_quantity']);
         }
 
         return $this->sendResponse(new SalesSummeryResource($salesSummery), 'Selling successfully.');
