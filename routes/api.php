@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PowerController;
 use App\Http\Controllers\Api\PurchasesController;
 use App\Http\Controllers\Api\RackController;
 use App\Http\Controllers\Api\SalesController;
+use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\UnitController;
@@ -46,4 +47,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('profile', [AuthController::class, 'profile']);
     Route::put('profile/update', [AuthController::class, 'profileUpdate']);
     Route::put('password/update', [AuthController::class, 'passwordUpdate']);
+
+    Route::get('default/settings', [SettingController::class, 'defaultSettings']);
+    Route::put('default/settings', [SettingController::class, 'defaultSettingsUpdate']);
+
 });

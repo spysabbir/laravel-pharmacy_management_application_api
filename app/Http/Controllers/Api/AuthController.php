@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Models\Customer;
 use App\Models\Medicine;
+use App\Models\PurchasesSummery;
+use App\Models\SalesSummery;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -68,6 +70,10 @@ class AuthController extends BaseController
             'countCustomer' => Customer::count(),
             'countSupplier' => Supplier::count(),
             'countMedicine' => Medicine::count(),
+            'totalPurchases' => PurchasesSummery::sum('grand_total'),
+            'totalPaidPurchases' => PurchasesSummery::where('payment_status', 'Paid')->orWhere('payment_status', 'Partial Paid')->sum('payment_amount'),
+            'totalSales' => SalesSummery::sum('grand_total'),
+            'totalPaidSales' => SalesSummery::where('payment_status', 'Paid')->orWhere('payment_status', 'Partial Paid')->sum('payment_amount'),
         ];
 
         if(is_null($result))
