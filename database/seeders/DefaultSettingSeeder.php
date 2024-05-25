@@ -17,11 +17,14 @@ class DefaultSettingSeeder extends Seeder
         DefaultSetting::create([
             'app_name' => 'Pharmacy',
             'app_email' => 'info@email.com',
-            'app_phone' => '1234567890',
+            'app_phone_number' => '1234567890',
             'app_address' => '123, Street Name, City Name, Country Name',
             'app_currency' => 'BDT',
             'app_currency_symbol' => '৳',
             'app_timezone' => 'Asia/Dhaka',
+            'app_url' => 'http://localhost:8000',
+            'app_logo' => 'default_logo.png',
+            'app_favicon' => 'default_favicon.png',
             'created_at' => Carbon::now()
         ]);
     }

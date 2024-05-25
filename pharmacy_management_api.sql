@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 12:19 PM
+-- Generation Time: May 23, 2024 at 11:53 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -54,11 +54,14 @@ CREATE TABLE `default_settings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `app_name` varchar(255) NOT NULL,
   `app_email` varchar(255) NOT NULL,
-  `app_phone` varchar(255) NOT NULL,
+  `app_phone_number` varchar(255) NOT NULL,
   `app_address` text NOT NULL,
   `app_currency` varchar(255) NOT NULL,
   `app_currency_symbol` varchar(255) NOT NULL,
   `app_timezone` varchar(255) NOT NULL,
+  `app_url` varchar(255) NOT NULL,
+  `app_logo` varchar(255) DEFAULT NULL,
+  `app_favicon` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -67,8 +70,8 @@ CREATE TABLE `default_settings` (
 -- Dumping data for table `default_settings`
 --
 
-INSERT INTO `default_settings` (`id`, `app_name`, `app_email`, `app_phone`, `app_address`, `app_currency`, `app_currency_symbol`, `app_timezone`, `created_at`, `updated_at`) VALUES
-(1, 'Pharmacy', 'info@email.com', '1234567890', '123, Street Name, City Name, Country Name', 'BDT', '৳', 'Asia/Dhaka', '2024-05-14 23:01:58', '2024-05-14 23:01:58');
+INSERT INTO `default_settings` (`id`, `app_name`, `app_email`, `app_phone_number`, `app_address`, `app_currency`, `app_currency_symbol`, `app_timezone`, `app_url`, `app_logo`, `app_favicon`, `created_at`, `updated_at`) VALUES
+(1, 'Pharmacy', 'info@email.com', '1234567890', '123, Street Name, City Name, Country Name', 'BDT', '৳', 'Asia/Dhaka', 'http://localhost:8000', 'default_logo.png', 'default_favicon.png', '2024-05-23 09:52:43', '2024-05-23 09:52:43');
 
 -- --------------------------------------------------------
 
@@ -118,7 +121,7 @@ INSERT INTO `medicines` (`id`, `supplier_id`, `type_id`, `name`, `power_id`, `un
 (3, 2, 2, 'Napa', 3, 3, 1, 0.00, 0.00, 31.00, 35.00, '2024-05-14 23:12:20', '2024-05-14 23:12:20'),
 (4, 3, 1, 'Pantonix 20', 4, 4, 1, 0.00, 0.00, 88.00, 98.00, '2024-05-14 23:14:03', '2024-05-14 23:14:03'),
 (5, 3, 1, 'Disopan 2', 5, 1, 1, 0.00, 0.00, 112.00, 125.00, '2024-05-14 23:15:03', '2024-05-14 23:15:03'),
-(6, 1, 1, 'Indever 10', 6, 5, 1, 5.00, 5.00, 9.00, 10.00, '2024-05-14 23:17:30', '2024-05-14 23:45:44'),
+(6, 1, 1, 'Indever 10', 6, 5, 1, 6.00, 5.00, 9.00, 10.00, '2024-05-14 23:17:30', '2024-05-20 11:54:56'),
 (7, 1, 3, 'Hexisol 500', 7, 6, 1, 2.00, 2.00, 195.00, 215.00, '2024-05-14 23:19:29', '2024-05-14 23:45:44');
 
 -- --------------------------------------------------------
@@ -153,7 +156,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2023_09_19_061305_create_purchases_details_table', 1),
 (14, '2023_09_19_061315_create_sales_summeries_table', 1),
 (15, '2023_09_19_061323_create_sales_details_table', 1),
-(16, '2024_05_14_101202_create_default_settings_table', 1);
+(18, '2024_05_14_101202_create_default_settings_table', 2);
 
 -- --------------------------------------------------------
 
@@ -234,7 +237,8 @@ CREATE TABLE `purchases_details` (
 
 INSERT INTO `purchases_details` (`id`, `purchases_summery_id`, `medicine_id`, `purchases_quantity`, `purchases_price`, `created_at`, `updated_at`) VALUES
 (1, 1, 6, 5, 9.00, '2024-05-14 23:20:33', '2024-05-14 23:20:33'),
-(2, 1, 7, 2, 195.00, '2024-05-14 23:20:33', '2024-05-14 23:20:33');
+(2, 1, 7, 2, 195.00, '2024-05-14 23:20:33', '2024-05-14 23:20:33'),
+(3, 2, 6, 1, 9.00, '2024-05-20 11:54:56', '2024-05-20 11:54:56');
 
 -- --------------------------------------------------------
 
@@ -260,7 +264,8 @@ CREATE TABLE `purchases_summeries` (
 --
 
 INSERT INTO `purchases_summeries` (`id`, `purchases_invoice_no`, `supplier_id`, `sub_total`, `discount`, `grand_total`, `payment_status`, `payment_amount`, `created_at`, `updated_at`) VALUES
-(1, 'PI-1', 1, 435.00, 10.00, 425.00, 'Paid', 425.00, '2024-05-14 23:20:33', '2024-05-14 23:20:33');
+(1, 'PI-1', 1, 435.00, 10.00, 425.00, 'Paid', 425.00, '2024-05-14 23:20:33', '2024-05-14 23:20:33'),
+(2, 'PI-2', 1, 9.00, 0.00, 9.00, 'Unpaid', 0.00, '2024-05-20 11:54:56', '2024-05-20 11:54:56');
 
 -- --------------------------------------------------------
 
@@ -573,13 +578,13 @@ ALTER TABLE `medicines`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `powers`
@@ -591,13 +596,13 @@ ALTER TABLE `powers`
 -- AUTO_INCREMENT for table `purchases_details`
 --
 ALTER TABLE `purchases_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `purchases_summeries`
 --
 ALTER TABLE `purchases_summeries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `racks`

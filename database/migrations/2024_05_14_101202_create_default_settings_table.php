@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('app_name');
             $table->string('app_email');
-            $table->string('app_phone');
+            $table->string('app_phone_number');
             $table->text('app_address');
             $table->string('app_currency');
             $table->string('app_currency_symbol');
             $table->string('app_timezone');
+            $table->string('app_url');
+            $table->string('app_logo')->nullable();
+            $table->string('app_favicon')->nullable();
             $table->timestamps();
         });
     }
