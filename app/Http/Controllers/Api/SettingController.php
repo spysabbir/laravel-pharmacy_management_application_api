@@ -42,7 +42,7 @@ class SettingController extends BaseController
         return $this->sendResponse($defaultSettings, 'Default settings retrieved successfully.');
     }
 
-    public function defaultSettingsUpdateo(Request $request)
+    public function defaultSettingsUpdate(Request $request)
     {
         $defaultSettings = DefaultSetting::first();
 
